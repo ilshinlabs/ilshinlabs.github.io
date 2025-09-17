@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ilshinlabs | Innovation for Tomorrow</title>
+  <meta name="description" content="Ilshinlabs Landing Page - GSAP Animated Onepage" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#0f1620;
+      --text:#e7edf5;
+      --muted:#a9b4c2;
+      --primary:#3ab0ff;
+      --accent:#7c5cff;
+      --card:#121a24;
+      --border:rgba(255,255,255,0.08);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Pretendard,system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans KR",sans-serif}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px}
+    header.nav{
+      position:fixed;top:0;left:0;right:0;z-index:50;
+      backdrop-filter:saturate(1.2) blur(8px);
+      border-bottom:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(10,12,18,0.7), rgba(10,12,18,0.35));
+    }
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:0.2px}
+    .brand-dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent))}
+    .nav-menu{display:flex;gap:20px}
+    .nav-menu a{padding:8px 12px;border-radius:8px;color:var(--muted)}
+    .nav-menu a.active,.nav-menu a:hover{color:var(--text);background:rgba(255,255,255,0.06)}
+    .hero{
+      padding-top:120px;padding-bottom:120px;
+      background:
+        radial-gradient(1000px 500px at 80% -10%, rgba(58,176,255,0.18), transparent 60%),
+        radial-gradient(900px 500px at 10% 10%, rgba(124,92,255,0.14), transparent 60%);
+      overflow:hidden; position:relative;
+    }
+    .hero h1{font-size:56px;line-height:1.08;margin:0 0 12px 0;letter-spacing:-0.5px}
+    .hero p{color:var(--muted);font-size:18px;margin:0 0 24px}
+    .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);padding:8px 12px;border-radius:999px;color:#cfe6ff;background:rgba(58,176,255,0.08)}
+    .cta{display:flex;gap:12px;margin-top:16px}
+    .btn{padding:12px 16px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text)}
+    .btn.primary{background:linear-gradient(135deg,var(--primary),var(--accent));border:none}
+    section{padding:96px 0;border-top:1px solid var(--border)}
+    .section-head{margin-bottom:28px}
+    .section-eyebrow{font-size:13px;color:var(--muted);letter-spacing:0.8px;text-transform:uppercase}
+    .section-title{font-size:36px;margin:6px 0 8px}
+    .section-sub{color:var(--muted)}
+    /* About */
+    .about .philosophy{display:grid;grid-template-columns:1.2fr 1fr;gap:28px}
+    .about .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px}
+    .kpi{display:flex;gap:16px;margin-top:16px;flex-wrap:wrap}
+    .kpi .chip{padding:8px 10px;border-radius:999px;border:1px solid var(--border);color:#cfe6ff;background:rgba(124,92,255,0.08)}
+    /* Services */
+    .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .service-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:transform .25s ease, box-shadow .25s ease}
+    .service-card:hover{transform:translateY(-6px);box-shadow:0 10px 30px rgba(0,0,0,0.25)}
+    .service-icon{width:56px;height:56px;border-radius:12px;background:linear-gradient(145deg,#203047,#111925);display:flex;align-items:center;justify-content:center}
+    .service-title{font-size:20px;font-weight:700}
+    .service-desc{color:var(--muted)}
+    /* Stack + Partners */
+    .stack .partner-row,.stack .lang-row{overflow:hidden;border:1px dashed var(--border);border-radius:12px;background:rgba(255,255,255,0.02)}
+    .ticker{display:flex;gap:32px;white-space:nowrap;will-change:transform;padding:14px 18px}
+    .tag{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.04)}
+    .logo-dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent))}
+    /* Map */
+    .map-embed{width:100%;height:420px;border:1px solid var(--border);border-radius:16px;overflow:hidden;background:#0a0f14}
+    /* Footer */
+    footer{padding:32px 0;border-top:1px solid var(--border);color:var(--muted)}
+    .foot-grid{display:grid;grid-template-columns:2fr 1fr;gap:20px}
+    .foot small{display:block;margin-top:8px}
+    @media (max-width:1024px){
+      .services-grid{grid-template-columns:1fr 1fr}
+      .about .philosophy{grid-template-columns:1fr}
+    }
+    @media (max-width:640px){
+      .hero h1{font-size:38px}
+      .services-grid{grid-template-columns:1fr}
+      .nav-menu{display:none}
+    }
+  </style>
+</head>
+<body>
+  <!-- Nav -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        <span>Ilshinlabs</span>
+      </div>
+      <nav class="nav-menu">
+        <a href="#about">회사소개</a>
+        <a href="#services">사업영역</a>
+        <a href="#stack">사용언어</a>
+        <a href="#map">찾아오시는 길</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <span class="pill">Innovation for Tomorrow</span>
+      <h1>Ilshinlabs</h1>
+      <p>플랫폼 · 앱 · AI를 잇는 확장 가능한 디지털 제품을 만듭니다.</p>
+      <div class="cta">
+        <a class="btn primary" href="#services">우리의 역량 보기</a>
+        <a class="btn" href="#about">경영철학</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">회사소개</div>
+        <h2 class="section-title">경영철학</h2>
+        <p class="section-sub">사용자에게는 단순함을, 파트너에게는 신뢰를. 데이터 기반의 의사결정과 투명한 협업으로 지속 가능한 품질 개선을 추구합니다.</p>
+      </div>
+      <div class="philosophy">
+        <div class="card">
+          <h3>핵심 가치</h3>
+          <ul>
+            <li>고객 가치 최우선</li>
+            <li>투명하고 빠른 협업</li>
+            <li>지속 가능한 품질 개선</li>
+          </ul>
+          <div class="kpi">
+            <span class="chip">Scalability</span>
+            <span class="chip">Reliability</span>
+            <span class="chip">Security</span>
+            <span class="chip">Performance</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>슬로건</h3>
+          <p>Innovation for Tomorrow</p>
+          <h4 style="margin-top:16px">대표자</h4>
+          <p>이정훈</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">사업영역</div>
+        <h2 class="section-title">우리가 잘하는 일</h2>
+        <p class="section-sub">플랫폼개발 · App 개발 · AI 개발을 카드 형태로 소개합니다.</p>
+      </div>
+      <div class="services-grid">
+        <article class="service-card">
+          <div class="service-icon">🔗</div>
+          <div class="service-title">플랫폼개발</div>
+          <p class="service-desc">마이크로서비스 아키텍처, 메시징, 데이터 파이프라인 기반으로 확장 가능한 플랫폼을 구축합니다.</p>
+        </article>
+        <article class="service-card">
+          <div class="service-icon">📱</div>
+          <div class="service-title">App 개발</div>
+          <p class="service-desc">Flutter 중심의 멀티플랫폼 앱으로 일관된 UX와 안정적 성능을 제공합니다.</p>
+        </article>
+        <article class="service-card">
+          <div class="service-icon">🤖</div>
+          <div class="service-title">AI 개발</div>
+          <p class="service-desc">추천·분류·텍스트 분석 등 문제 정의부터 배포·모니터링까지 전 주기를 지원합니다.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stack + Partners -->
+  <section class="stack" id="stack">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">기술 스택</div>
+        <h2 class="section-title">파트너 & 사용언어</h2>
+        <p class="section-sub">파트너 솔루션과 사용 언어를 카루셀 형태로 소개합니다.</p>
+      </div>
+
+      <!-- Partners ticker -->
+      <div class="partner-row" aria-label="파트너">
+        <div class="ticker" id="partnersTicker" role="list">
+          <span class="tag" role="listitem"><span class="logo-dot"></span>Red Hat Linux</span>
+          <span class="tag" role="listitem"><span class="logo-dot"></span>n8n</span>
+          <span class="tag" role="listitem"><span class="logo-dot"></span>Docker</span>
+          <span class="tag" role="listitem"><span class="logo-dot"></span>Nginx</span>
+          <span class="tag" role="listitem"><span class="logo-dot"></span>Apache Tomcat</span>
+          <!-- duplicate for seamless loop -->
+          <span class="tag"><span class="logo-dot"></span>Red Hat Linux</span>
+          <span class="tag"><span class="logo-dot"></span>n8n</span>
+          <span class="tag"><span class="logo-dot"></span>Docker</span>
+          <span class="tag"><span class="logo-dot"></span>Nginx</span>
+          <span class="tag"><span class="logo-dot"></span>Apache Tomcat</span>
+        </div>
+      </div>
+
+      <div style="height:14px"></div>
+
+      <!-- Languages ticker -->
+      <div class="lang-row" aria-label="사용언어">
+        <div class="ticker" id="langsTicker" role="list">
+          <span class="tag" role="listitem"><span class="logo-dot"></span>Flutter</span>
+          <span class="tag" role="listitem"><span class="logo-dot"></span>Java</span>
+          <span class="tag" role="listitem"><span class="logo-dot"></span>Kotlin</span>
+          <span class="tag" role="listitem"><span class="logo-dot"></span>Go</span>
+          <span class="tag" role="listitem"><span class="logo-dot"></span>Vue.js</span>
+          <!-- duplicate for seamless loop -->
+          <span class="tag"><span class="logo-dot"></span>Flutter</span>
+          <span class="tag"><span class="logo-dot"></span>Java</span>
+          <span class="tag"><span class="logo-dot"></span>Kotlin</span>
+          <span class="tag"><span class="logo-dot"></span>Go</span>
+          <span class="tag"><span class="logo-dot"></span>Vue.js</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map -->
+  <section class="map" id="map">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">찾아오시는 길</div>
+        <h2 class="section-title">서울시 강서구 마곡중앙로 161-17 보타닉파크타워1</h2>
+        <p class="section-sub">Google Maps에서 길찾기를 이용해 주세요.</p>
+      </div>
+      <div class="map-embed" id="mapBox">
+        <iframe
+          title="Ilshinlabs 위치"
+          width="100%" height="100%" style="border:0"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=%EC%84%9C%EC%9A%B8%EC%8B%9C%20%EA%B0%95%EC%84%9C%EA%B5%AC%20%EB%A7%88%EA%B3%A1%EC%A4%91%EC%95%99%EB%A1%9C%20161-17%20%EB%B3%B4%ED%83%80%EB%8B%89%ED%8C%8C%ED%81%AC%ED%83%80%EC%9B%941&output=embed">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="foot">
+    <div class="container foot-grid">
+      <div>
+        <div class="brand" style="margin-bottom:6px">
+          <span class="brand-dot"></span>
+          <strong>Ilshinlabs</strong>
+        </div>
+        <small>주소: 서울시 강서구 마곡중앙로 161-17 보타닉파크타워1</small>
+        <small>대표자명: 이정훈</small>
+        <small>사업자등록번호: 000-00-00000</small>
+      </div>
+      <div style="text-align:right">
+        <a class="btn" style="padding:8px 12px" href="https://www.hometax.go.kr/" target="_blank" rel="noopener">사업자확인 바로가기</a>
+        <small>위 링크는 예시입니다. 실제 확인 링크로 교체해 주세요.</small>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script>
+    // GSAP 기본
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 섹션 진입 페이드업
+    gsap.utils.toArray("section").forEach((sec)=>{
+      gsap.from(sec.querySelector(".section-head"), {
+        opacity:0, y:30, duration:0.8, ease:"power2.out",
+        scrollTrigger:{ trigger: sec, start:"top 75%" }
+      });
+    });
+
+    // 서비스 카드 stagger
+    gsap.from(".service-card", {
+      opacity:0, y:24, stagger:0.12, duration:0.8, ease:"power2.out",
+      scrollTrigger:{ trigger: ".services-grid", start:"top 75%" }
+    });
+
+    // Hero 텍스트 등장
+    gsap.from(".hero .pill", { opacity:0, y:20, duration:0.6, ease:"power2.out", delay:0.1 });
+    gsap.from(".hero h1", { opacity:0, y:20, duration:0.7, ease:"power2.out", delay:0.2 });
+    gsap.from(".hero p", { opacity:0, y:20, duration:0.7, ease:"power2.out", delay:0.3 });
+    gsap.from(".cta", { opacity:0, y:20, duration:0.7, ease:"power2.out", delay:0.4 });
+
+    // 내비 활성 섹션 표시(스크롤스파이)
+    const links = document.querySelectorAll(".nav-menu a");
+    links.forEach((a)=>{
+      const id = a.getAttribute("href");
+      if(!id || id === "#") return;
+      const target = document.querySelector(id);
+      ScrollTrigger.create({
+        trigger: target,
+        start: "top center",
+        end: "bottom center",
+        onEnter: ()=>setActive(a),
+        onEnterBack: ()=>setActive(a)
+      });
+    });
+    function setActive(el){
+      links.forEach(l=>l.classList.remove("active"));
+      el.classList.add("active");
+    }
+
+    // 무한 티커(파트너/언어)
+    function makeTicker(selector, speed = 40){
+      const el = document.querySelector(selector);
+      let x = 0;
+      const step = () => {
+        x -= speed * 0.016; // 약 60fps 기준
+        const width = el.scrollWidth / 2; // 절반 단위 반복(복제해둠)
+        if (Math.abs(x) >= width) x = 0;
+        el.style.transform = `translateX(${x}px)`;
+        requestAnimationFrame(step);
+      };
+      step();
+      // 뷰포트 제어: 보이면 재생/숨기면 일시정지
+      let playing = true;
+      const st = ScrollTrigger.create({
+        trigger: el, start:"top bottom", end:"bottom top",
+        onEnter: ()=>{ if(!playing){ playing=true; step(); } },
+        onLeave: ()=>{ playing=false; },
+        onEnterBack: ()=>{ if(!playing){ playing=true; step(); } },
+        onLeaveBack: ()=>{ playing=false; }
+      });
+      // 마우스 오버 시 살짝 확대
+      el.addEventListener("mouseenter", ()=> gsap.to(el, { scale:1.02, duration:0.2 }));
+      el.addEventListener("mouseleave", ()=> gsap.to(el, { scale:1.0, duration:0.2 }));
+    }
+    makeTicker("#partnersTicker", 35);
+    makeTicker("#langsTicker", 28);
+
+    // 지도 살짝 페이드인 + 마커 느낌(스케일)
+    gsap.from("#mapBox", {
+      opacity:0, scale:0.98, duration:0.8, ease:"power2.out",
+      scrollTrigger:{ trigger:"#map", start:"top 75%" }
+    });
+  </script>
+</body>
+</html>
